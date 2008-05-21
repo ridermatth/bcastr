@@ -60,13 +60,13 @@
 			_imageContainer.addEventListener("onChanged",onChanged,false,0,true)
 			if (!loaderInfo.parameters["bcastrFile"]) {
 				_xmlLdr.addEventListener(Event.COMPLETE, onXmlLoaded, false, 0, true);
-				_dataXmlUrl = "data.xml";
 				_xmlLdr.load(new URLRequest(_dataXmlUrl));
 			}else {
 				run();
 			}
 		}
 		private function initVar() {
+			_dataXmlUrl =  defaultString(loaderInfo.parameters["xml"], _dataXmlUrl);
 			_imageContainer.imageWidth = defaultNum(this.loaderInfo.parameters["width"], this.stage.stageWidth);
 			_imageContainer.imageHeight = defaultNum(this.loaderInfo.parameters["height"],this.stage.stageHeight);
 			_roundCorner =  defaultNum(this.loaderInfo.parameters["roundCorner"], _roundCorner);
