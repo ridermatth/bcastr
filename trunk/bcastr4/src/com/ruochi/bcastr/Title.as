@@ -5,45 +5,48 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import gs.TweenLite;
-	public class Title extends Sprite implements IBcastrPlugIn {
+	import com.ruochi.bcastr.Bcastr4;
+	import com.ruochi.bcastr.BcastrConfig;
+	public class Title extends Sprite {
 		private var _styleText:StyleText = new StyleText();
 		private var _bgHeight:Number = 24;
 		private var _bgWidth:Number;
-		private var _bgColor:uint = 0xff9900;
-		private var _bgAlpha:Number = .5;
+		//private var _bgColor:uint = 0xff9900;
+		//private var _bgAlpha:Number = .5;
 		private var _bg:Rect;
 		private var _text:String;
-		private var _tweenDuration:Number = 1;
-		public function Title(w:Number, h:Number =24) {
+		//private var _tweenDuration:Number = 1;
+		private var _bcastr4:Bcastr4;
+		public function Title() {
+			
+		}
+		public function init(w:Number, h:Number = 24) {
+			_bcastr4 = Bcastr4.instance;
 			_bgHeight = h;
 			_bgWidth = w;
-			this.addEventListener(Event.ADDED_TO_STAGE, onStage, false, 0, true);
+			buildUI();
+			_bcastr4.addEventListener(Eventer.CHANGE, onBcastr4Change, false, 0, true);
 		}
-		public function resieveJavaScript(ob:Object):void {
-			_styleText.text = ob.toString();
-		}
-		private function onStage(e:Event) {
-			buildUI()
+		
+		private function onBcastr4Change(e:Eventer):void {trace(e.eventInfo)
+			titleText = BcastrConfig.dataXml.channel.item[e.eventInfo].title;
 		}
 		private function buildUI() {
-			_bg = new Rect(_bgWidth, _bgHeight, _bgColor);
-			_bg.alpha = _bgAlpha;
+			_bg = new Rect(_bgWidth, _bgHeight, BcastrConfig.titleBgColor);
+			_bg.alpha = BcastrConfig.titleBgAlpha;
 			_styleText.width = _bgWidth;
 			_styleText.align = "center";
 			_styleText.autoSize = "center";
 			addChild(_bg);
 			addChild(_styleText);
 		}
+		private function showTitle():void {
+			_styleText.text = _text;
+			TweenLite.to(this, BcastrConfig.titleMoveDuration/2, { y:0 } );
+		}
 		public function set titleText(str:String) {
 			_text = str;
-			_styleText.text = _text;
-			y = -height;
-			TweenLite.to(this, _tweenDuration, { y:0 } );
-		}
-		public function recieveEventer(event:Object):void {
-			if(event.type=="change"){
-				titleText = event.xml.title[0];
-			}
+			TweenLite.to(this, BcastrConfig.titleMoveDuration / 2, { y: -height, onComplete:showTitle } );			
 		}
 	}
 }
