@@ -1,11 +1,6 @@
 ﻿package com.ruochi.bcastr{
 	import com.ruochi.bcastr.IBcastrPlugIn;
-	import com.ruochi.component.GradientRadialBtn;
-	import com.ruochi.component.ImageContainer;
-	import com.ruochi.component.CircleProgressBar;
-	import com.ruochi.utils.defaultNum;
-	import com.ruochi.utils.defaultBoolean;
-	import com.ruochi.utils.defaultString;
+	import com.ruochi.bcastr.ImageContainer;
 	import com.ruochi.utils.replaceHat;
 	import com.ruochi.events.Eventer;
 	import com.ruochi.utils.searchImageUrl;
@@ -23,94 +18,84 @@
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.Security;
+	import com.ruochi.component.SimpleAlert;
+	import com.ruochi.bcastr.BcastrConfig;
+	import com.ruochi.layout.place;
+	import com.ruochi.utils.xmlToVar;
+	import com.ruochi.bcastr.Trans;
 	public class Bcastr4 extends Sprite {
 		private var _imageContainer:ImageContainer = new ImageContainer();
-		private var _isShowProgressBar:Boolean;
-		private var _titleArray:Array = new Array();
-		private var _circleProgressBar:CircleProgressBar;
-		private var _circleProgressBarColor:uint=0xffffff;
-		private var _windowOpen:String = "_blank";
-		private var _title:Title;
-		private var _xmlLdr:URLLoader = new URLLoader();
-		private var _dataXml:XML;
-		private var _dataXmlUrl:String = "bcastr.xml";
-		private var _plugInArray:Array = new Array();
-		private var _id:String = "bcastr4";
+		private var _title:Title = new Title;
 		private var _btnSet:BtnSet = new BtnSet;
 		private var _imageMask:RoundRect;
-		private var _roundCorner:Number = 0;
-		public function Bcastr4() {			
-			addEventListener(Event.ADDED_TO_STAGE , init);
+		private static var _instance:Bcastr4;
+		public function Bcastr4() {
+			_instance = this;
+			init();
 		}
-		private  function init(e:Event = null) {
+		private function init():void {
 			stage.align=StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			Security.allowDomain('*');
-			initVar();
-			_plugInArray.push(_title);
-			if (_isShowProgressBar) {
-				_circleProgressBar = new CircleProgressBar(_imageContainer.imageWidth, _imageContainer.imageHeight);
-				_circleProgressBar.bg.visible = false;
-				addChild(_circleProgressBar);			
-				_imageContainer.addEventListener("beginLoading", onBeginLoadin, false, 0, true);
-				_imageContainer.addEventListener("endLoading", onBeginLoadin, false, 0, true);
+			setChildren();
+			addChildren();
+			configListener();
+			if (loaderInfo.parameters["xml"]) {
+				var xmlStr = replaceHat(String(loaderInfo.parameters["xml"]));
+				var dataXml = new XML(xmlStr);				
+				if (dataXml.channel.item.length() > 0) {
+					startUp(dataXml);
+				}else {
+					BcastrConfig.xml = xmlStr;
+				}
 			}
+			if (BcastrConfig.dataXml==null) {
+				var xmlLoader:URLLoader = new URLLoader();
+				xmlLoader.addEventListener(Event.COMPLETE, onXmlLoaderComplete, false, 0, true);
+				xmlLoader.load(new URLRequest(BcastrConfig.xml));
+			}
+		}
+		private function setChildren():void {
+			
+		}
+		private function addChildren():void {
 			addChild(_imageContainer);
-			//addChild(_title);
-			_imageContainer.addEventListener("onChanged",onChanged,false,0,true)
-			if (!loaderInfo.parameters["bcastrFile"]) {
-				_xmlLdr.addEventListener(Event.COMPLETE, onXmlLoaded, false, 0, true);
-				_xmlLdr.load(new URLRequest(_dataXmlUrl));
-			}else {
-				run();
+			if(BcastrConfig.isShowTilte){
+				addChild(_title);	
 			}
+			if (BcastrConfig.isShowBtn) {
+				addChild(_btnSet);			
+			}					
+			stage.addChild(SimpleAlert.instance);	
 		}
-		private function initVar() {
-			_dataXmlUrl =  defaultString(loaderInfo.parameters["xml"], _dataXmlUrl);
-			_imageContainer.imageWidth = defaultNum(this.loaderInfo.parameters["width"], this.stage.stageWidth);
-			_imageContainer.imageHeight = defaultNum(this.loaderInfo.parameters["height"],this.stage.stageHeight);
-			_roundCorner =  defaultNum(this.loaderInfo.parameters["roundCorner"], _roundCorner);
-			_imageContainer.autoPlayTime = defaultNum(this.loaderInfo.parameters["autoPlayTime"], _imageContainer.autoPlayTime);			
-			_imageContainer.heightQuality = defaultBoolean(this.loaderInfo.parameters["heightQuality"], false);
-			_imageContainer.imageBlendMode = defaultString(this.loaderInfo.parameters["blendMode"], "normal");
-			_imageContainer.transDuration = defaultNum(this.loaderInfo.parameters["transDuration"], 1.5);
-			_windowOpen = defaultString(this.loaderInfo.parameters["windowOpen"], "_blank");
-			_imageContainer.dataXml = _dataXml;
-			//_imageContainer.linkArray = defaultString(this.loaderInfo.parameters["bcastrLink"], "").split("|");
-			//_titleArray = defaultString(this.loaderInfo.parameters["bcastrTitle"], "").split("|");
-			_isShowProgressBar = defaultBoolean(this.loaderInfo.parameters["isShowProgressBar"], "true");
-			_circleProgressBarColor = defaultNum(this.loaderInfo.parameters["autoPlayTime"], _circleProgressBarColor);
-			_id = defaultString(this.loaderInfo.parameters["id"], _id);
-			stage.frameRate = defaultNum(this.loaderInfo.parameters["frameRate"], "24");
-			_title = new Title(_imageContainer.imageWidth);
+		private function configListener():void {
+			_imageContainer.addEventListener(Eventer.CHANGE,onImageContainerChanged,false,0,true)
 		}
-		private function onXmlLoaded(event:Event) {
-			_dataXml = new XML(event.target.data);
-			formatImageRss(_dataXml);
-			_imageContainer.dataXml = _dataXml;
-			run();
+		private function onXmlLoaderComplete(event:Event) {
+			startUp(new XML(event.target.data));
 		}
-		private function run():void {
-			//_btnSet = new BtnSet(_dataXml.channel.item.length());
-			//addChild(_btnSet);			
-			_plugInArray.push(_btnSet);
-			_btnSet.y = 100;
-			_imageContainer.run();			
-			sentEventer( { type:"init" } );
+		private function startUp(xml:XML):void {
+			formatImageRss(xml);
+			xmlToVar(xml.config[0], BcastrConfig); trace(BcastrConfig.roundCorner);
+			BcastrConfig.dataXml = xml;
+			_btnSet.init();
+			place(_btnSet, BcastrConfig.btnMargin, stage);
+			_imageContainer.dataXml = BcastrConfig.dataXml;
+			_imageContainer.imageWidth = isNaN(BcastrConfig.imageWidth)?stage.stageWidth:BcastrConfig.imageWidth;
+			_imageContainer.imageHeight = isNaN(BcastrConfig.imageHeight)?stage.stageHeight:BcastrConfig.imageHeight;
+			_imageContainer.autoPlayTime = BcastrConfig.autoPlayTime;
+			_imageContainer.heightQuality = BcastrConfig.isHeightQuality;
+			_imageContainer.transDuration = BcastrConfig.transDuration;
+			_imageContainer.windowOpen = BcastrConfig.windowOpen;
+			_title.init(_imageContainer.imageWidth);
+			_imageMask = new RoundRect(_imageContainer.imageWidth, imageContainer.imageHeight, BcastrConfig.roundCorner)
+			_imageContainer.mask = _imageMask;
+			_imageContainer.imageIn = Trans.imageBlurIn;
+			_imageContainer.imageOut = Trans.imageBlurOut;
+			_imageContainer.run();
 		}
-		private function onBeginLoadin(e:Event) {
-			_circleProgressBar.start();
-		}
-		private function onEndLoadin(e:Event) {
-			_circleProgressBar.stop();
-		}
-		private function onChanged(e:Event) {
-			sentEventer({type:"change", xml:_dataXml.channel.item[_imageContainer.focusId],id:_imageContainer.focusId});
-		}
-		public function sentEventer(event:Object):void {
-			for (var i:int = 0; i < _plugInArray.length; i++) {
-				(_plugInArray[i] as IBcastrPlugIn).recieveEventer(event);
-			}
+		private function onImageContainerChanged(e:Eventer) {
+			dispatchEvent(new Eventer(Eventer.CHANGE,_imageContainer.focusId));
 		}
 		public function goto(num:int):void {
 			_imageContainer.goto(num);
@@ -119,7 +104,10 @@
 			return _imageContainer;
 		}
 		public function get numImage():int {
-			return _dataXml.channel.item.length();
+			return BcastrConfig.dataXml.channel.item.length();
+		}
+		public static function get instance():Bcastr4 {
+			return _instance;
 		}
 	}
 }
