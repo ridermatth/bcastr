@@ -20,6 +20,7 @@
 	import flash.utils.Timer;
 	import flash.utils.ByteArray;
 	import flash.net.navigateToURL;
+	import com.ruochi.layout.ScaleUtils;
 	public class ImageContainer extends Sprite {
 		private var _loadId:int = 0;
 		private var _focusId:int = -1;
@@ -35,6 +36,7 @@
 		private var _dataXml:XML = new XML();		
 		public var imageIn:Function;
 		public var imageOut:Function;
+		private var _scaleMode:String = ScaleUtils.NO_BORDER;
 		public function ImageContainer() {
 			init();
 		}
@@ -60,10 +62,26 @@
 			image.name = String(_loadId);
 			var bitmap:Bitmap = e.target.loader.content as Bitmap;
 			bitmap.smoothing = true;
-			fullDimension(bitmap, _imageWidth, _imageHeight);
-			if (bitmap.scaleX<.5&&_heightQuality==true) {
-				bitmap.bitmapData = resizeBitmap(bitmap.bitmapData, bitmap.width, bitmap.height);
-				fullDimension(bitmap,_imageWidth,_imageHeight);
+			if (_scaleMode == ScaleUtils.NO_SCALE) {
+				ScaleUtils.NO_SCALE(bitmap, _imageWidth, _imageHeight);
+			}else if(_scaleMode == ScaleUtils.EXACT_FIT) {
+				ScaleUtils.fillExactFit(bitmap, _imageWidth, _imageHeight);
+				if (bitmap.scaleX<.5&&_heightQuality==true) {
+					bitmap.bitmapData = resizeBitmap(bitmap.bitmapData, bitmap.width, bitmap.height);
+					ScaleUtils.fillExactFit(bitmap, _imageWidth, _imageHeight);
+				}
+			}else if (_scaleMode == ScaleUtils.NO_BORDER) {				
+				ScaleUtils.fillNoBorder(bitmap, _imageWidth, _imageHeight);
+				if (bitmap.scaleX<.5&&_heightQuality==true) {
+					bitmap.bitmapData = resizeBitmap(bitmap.bitmapData, bitmap.width, bitmap.height);
+					ScaleUtils.fillNoBorder(bitmap, _imageWidth, _imageHeight);
+				}
+			}else if (_scaleMode == ScaleUtils.SHOW_ALL) {
+				ScaleUtils.fillShowAll(bitmap, _imageWidth, _imageHeight);
+				if (bitmap.scaleX<.5&&_heightQuality==true) {
+					bitmap.bitmapData = resizeBitmap(bitmap.bitmapData, bitmap.width, bitmap.height);
+					ScaleUtils.fillShowAll(bitmap, _imageWidth, _imageHeight);
+				}
 			}
 			image.addChild(bitmap);
 			bitmap.visible = false;
