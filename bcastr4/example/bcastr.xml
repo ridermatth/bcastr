@@ -2,44 +2,53 @@
 <data>
 	<channel>
 		<item>
-			<link>http://www.91duojiao.cn</link>
+			<link>http://www.ruochi.com</link>
 			<image>image1.jpg</image>
 			<title>Bell Tower,Xi'an,China</title>
 		</item>
 		<item>
-			<link>http://www.91duojiao.cn</link>
+			<link>http://www.ruochi.com</link>
 			<image>image2.jpg</image>
 			<title>Greater Wild Goose Pagoda,Xi'an,China</title>
 		</item>
 		<item>
-			<link>http://www.91duojiao.cn</link>
+			<link>http://www.ruochi.com</link>
 			<image>image3.jpg</image>
 			<title>Terra Cotta Warriors,Xi'an,China</title>
 		</item>
 		<item>
-			<link>http://www.91duojiao.cn</link>
+			<link>http://www.ruochi.com</link>
 			<image>image4.jpg</image>
 			<title>The Forest of Steles ,Xi'an,China</title>
 		</item>
 		<item>
-			<link>http://www.91duojiao.cn</link>
+			<link>http://www.ruochi.com</link>
 			<image>image5.jpg</image>
 			<title>The Qian Tomb,Xi'an,China</title>
 		</item>
 	</channel>
 	<config>	
+		<roundCorner>0</roundCorner>
 		<autoPlayTime>8</autoPlayTime>
-		<changImageMode>click</changImageMode>	
+		<isHeightQuality>false</isHeightQuality>
 		<blendMode>normal</blendMode>
+		<transDuration>1</transDuration>
+		<windowOpen>_self</windowOpen>
 		<btnSetMargin>auto 5 5 auto</btnSetMargin>
 		<btnDistance>20</btnDistance>
-		<isHeightQuality>false</isHeightQuality>
-		<isShowBtn></isShowBtn>
-		<isShowTitle></isShowTitle>
-		<roundCorner>0</roundCorner>
-		<transDuration>2</transDuration>
-		<transMode>alpha</transMode>
-		<windowOpen>_blank</windowOpen>
+		<titleBgColor>0xff6600</titleBgColor>
+		<titleBgAlpha>.75</titleBgAlpha>
+		<titleMoveDuration>1</titleMoveDuration>
+		<btnAlpha>.7</btnAlpha>		
+		<btnDefaultColor>0xB3433</btnDefaultColor>
+		<btnHoverColor>0xff9900</btnHoverColor>
+		<btnFocusColor>0xff6600</btnFocusColor>
+		<changImageMode>click</changImageMode>
+		<isShowBtn>true</isShowBtn>
+		<isShowTitle>true</isShowTitle>
+		<scaleMode>noBorder</scaleMode>
+		<transform>blur</transform>
+		<isShowAbout>true</isShowAbout>
 	</config>
 </data>
         

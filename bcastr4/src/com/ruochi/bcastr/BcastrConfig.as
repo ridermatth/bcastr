@@ -1,5 +1,7 @@
 ﻿package com.ruochi.bcastr {
 	import com.ruochi.layout.Margin;
+	import com.ruochi.layout.ScaleUtils;
+	import com.ruochi.bcastr.Trans;
 	public class BcastrConfig {
 		public static const HOVER:String = "hover";
 		public static const CLICK:String = "click";
@@ -23,13 +25,16 @@
 		public static var btnDefaultColor:uint = 0x1B3433;
 		public static var btnHoverColor:uint = 0xff9900;
 		public static var btnFocusColor:uint = 0xff6600;
+		public static var btnAlpha:Number = .75;
 		public static var btnFontSize:uint = 10;
 		public static var changImageMode:String = CLICK;
 		public static var isShowBtn:Boolean = true;
-		public static var isShowTilte:Boolean = true;
+		public static var isShowTitle:Boolean = true;
+		public static var scaleMode:String = ScaleUtils.SHOW_ALL;
+		public static var transform:String = Trans.ALPHA;
+		public static var isShowAbout:Boolean = true;
 		public static function set btnSetMargin(s:String) {
 			btnMargin = new Margin(s);
 		}
-	}
-	
+	}	
 }

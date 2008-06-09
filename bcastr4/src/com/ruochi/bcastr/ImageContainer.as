@@ -1,11 +1,11 @@
 ﻿package com.ruochi.bcastr {
-	import com.ruochi.net.CrossURLLoader;
 	import com.ruochi.shape.RoundRect;
 	import com.ruochi.events.Eventer;
-	import com.ruochi.utils.fullDimension;
 	import com.ruochi.utils.resizeBitmap;
 	import fl.motion.easing.*;
 	import com.ruochi.events.Eventer;
+	import flash.geom.Rectangle;
+	import flash.net.URLLoader;
 	import gs.TweenLite;
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
@@ -27,7 +27,7 @@
 		private var _imageWidth:Number =100;
 		private var _imageHeight:Number =100;
 		private var _autoPlayTime:Number = 8;
-		private var _binaryLdr:CrossURLLoader = new CrossURLLoader();
+		private var _binaryLdr:URLLoader = new URLLoader();
 		private var _transTimer:Timer;
 		private var _heightQuality:Boolean;
 		private var _imageBlendMode:String = "normal"
@@ -41,14 +41,12 @@
 			init();
 		}
 		private function init():void {
-			_transTimer = new Timer(_autoPlayTime * 1000, 0);
-			_transTimer.addEventListener(TimerEvent.TIMER, timerHandler);
 			_binaryLdr.dataFormat = URLLoaderDataFormat.BINARY;
 			_binaryLdr.addEventListener(Event.COMPLETE, onComplete,false,0,true);
 			_binaryLdr.addEventListener(IOErrorEvent.IO_ERROR, onComplete, false, 0, true);			
 		}
 		private function loadImage():void {
-			_binaryLdr.crossLoad(new URLRequest(_dataXml.channel.item[_loadId].image[0]));
+			_binaryLdr.load(new URLRequest(_dataXml.channel.item[_loadId].image[0]));
 			dispatchEvent(new Eventer(Eventer.START));
 		}
 		private function onComplete(e:Event):void {
@@ -59,11 +57,12 @@
 		}
 		private function imageInit(e:Event):void {
 			var image:Sprite = new Sprite();
+			image.scrollRect = new Rectangle(0, 0, _imageWidth, _imageHeight);
 			image.name = String(_loadId);
 			var bitmap:Bitmap = e.target.loader.content as Bitmap;
 			bitmap.smoothing = true;
 			if (_scaleMode == ScaleUtils.NO_SCALE) {
-				ScaleUtils.NO_SCALE(bitmap, _imageWidth, _imageHeight);
+				ScaleUtils.fillNoScale(bitmap, _imageWidth, _imageHeight);
 			}else if(_scaleMode == ScaleUtils.EXACT_FIT) {
 				ScaleUtils.fillExactFit(bitmap, _imageWidth, _imageHeight);
 				if (bitmap.scaleX<.5&&_heightQuality==true) {
@@ -110,6 +109,8 @@
 			navigateToURL(new URLRequest(_dataXml.channel.item[getChildIndex(e.currentTarget as DisplayObject)].link[0]),_windowOpen);
 		}
 		public function run():void {			
+			_transTimer = new Timer(_autoPlayTime * 1000, 0);
+			_transTimer.addEventListener(TimerEvent.TIMER, timerHandler);
 			loadImage();
 		}
 		public function goto(id) {
@@ -159,6 +160,9 @@
 		}
 		public function set windowOpen(s:String):void {
 			_windowOpen = s;
+		}
+		public function set scaleMode(s:String):void {
+			_scaleMode = s;
 		}
 	}
 }

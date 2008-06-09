@@ -11,16 +11,13 @@
 		private var _styleText:StyleText = new StyleText();
 		private var _bgHeight:Number = 24;
 		private var _bgWidth:Number;
-		//private var _bgColor:uint = 0xff9900;
-		//private var _bgAlpha:Number = .5;
 		private var _bg:Rect;
 		private var _text:String;
-		//private var _tweenDuration:Number = 1;
 		private var _bcastr4:Bcastr4;
 		public function Title() {
 			
 		}
-		public function init(w:Number, h:Number = 24) {
+		public function init(w:Number, h:Number = 24):void {
 			_bcastr4 = Bcastr4.instance;
 			_bgHeight = h;
 			_bgWidth = w;
@@ -28,25 +25,28 @@
 			_bcastr4.addEventListener(Eventer.CHANGE, onBcastr4Change, false, 0, true);
 		}
 		
-		private function onBcastr4Change(e:Eventer):void {trace(e.eventInfo)
+		private function onBcastr4Change(e:Eventer):void {
 			titleText = BcastrConfig.dataXml.channel.item[e.eventInfo].title;
 		}
-		private function buildUI() {
+		private function buildUI():void {
 			_bg = new Rect(_bgWidth, _bgHeight, BcastrConfig.titleBgColor);
 			_bg.alpha = BcastrConfig.titleBgAlpha;
 			_styleText.width = _bgWidth;
 			_styleText.align = "center";
 			_styleText.autoSize = "center";
+			y = -_bgHeight;
 			addChild(_bg);
 			addChild(_styleText);
 		}
 		private function showTitle():void {
 			_styleText.text = _text;
-			TweenLite.to(this, BcastrConfig.titleMoveDuration/2, { y:0 } );
+			if (_text && _text.length > 0) {
+				TweenLite.to(this, BcastrConfig.titleMoveDuration / 2, { y:0 } );
+			}
 		}
-		public function set titleText(str:String) {
+		public function set titleText(str:String):void {
 			_text = str;
-			TweenLite.to(this, BcastrConfig.titleMoveDuration / 2, { y: -height, onComplete:showTitle } );			
+			TweenLite.to(this, BcastrConfig.titleMoveDuration / 2, { y: -height, onComplete:showTitle } );
 		}
 	}
 }
