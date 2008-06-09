@@ -9,7 +9,7 @@
 	public class GradientRadialBtn extends Sprite {
 		private var _isFocus:Boolean = false;
 		private var _color:uint;
-		private var _body:GradientRadialTopLeftRect = new GradientRadialTopLeftRect(BcastrConfig.btnWidth, BcastrConfig.btnHeight, BcastrConfig.btnDefaultColor, BcastrConfig.btnDefaultColor, .5, .8);
+		private var _body:GradientRadialTopLeftRect = new GradientRadialTopLeftRect(BcastrConfig.btnWidth, BcastrConfig.btnHeight, BcastrConfig.btnDefaultColor, BcastrConfig.btnDefaultColor, BcastrConfig.btnAlpha, BcastrConfig.btnAlpha*1.2);
 		private var _numText:EmbedText = new EmbedText();
 		public function GradientRadialBtn() {
 			init();
@@ -31,6 +31,7 @@
 			addChild(_numText);						
 			_numText.width = BcastrConfig.btnWidth;
 			_numText.size = BcastrConfig.btnFontSize;
+			cacheAsBitmap = true;
 		}
 		private function addListener():void {
 			addEventListener(MouseEvent.MOUSE_OVER, onMouseOver, false, 0, true);
