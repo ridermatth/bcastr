@@ -37,10 +37,12 @@
 		<btnSetMargin>auto 5 5 auto</btnSetMargin>
 		<btnDistance>20</btnDistance>
 		<titleBgColor>0xff6600</titleBgColor>
+		<titleTextColor>0xffffff</titleTextColor>
 		<titleBgAlpha>.75</titleBgAlpha>
 		<titleMoveDuration>1</titleMoveDuration>
-		<btnAlpha>.7</btnAlpha>		
-		<btnDefaultColor>0xB3433</btnDefaultColor>
+		<btnAlpha>.7</btnAlpha>	
+		<btnTextColor>0xffffff</btnTextColor>	
+		<btnDefaultColor>0x1B3433</btnDefaultColor>
 		<btnHoverColor>0xff9900</btnHoverColor>
 		<btnFocusColor>0xff6600</btnFocusColor>
 		<changImageMode>click</changImageMode>
