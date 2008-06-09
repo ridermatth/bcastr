@@ -20,8 +20,10 @@
 		public static var titleBgColor:uint = 0xff6600;
 		public static var titleBgAlpha:Number = .75;
 		public static var titleMoveDuration:Number = 1;
+		public static var titleTextColor:uint = 0xffffff;
 		public static var btnWidth:Number = 16;
 		public static var btnHeight:Number = 16;
+		public static var btnTextColor:uint = 0xffffff;
 		public static var btnDefaultColor:uint = 0x1B3433;
 		public static var btnHoverColor:uint = 0xff9900;
 		public static var btnFocusColor:uint = 0xff6600;

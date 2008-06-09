@@ -27,6 +27,7 @@
 			_numText.autoSize = "center";
 			_numText.y = 2;
 			_numText.x = 0;
+			_numText.color = BcastrConfig.btnTextColor;
 			addChild(_body);
 			addChild(_numText);						
 			_numText.width = BcastrConfig.btnWidth;

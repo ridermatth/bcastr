@@ -34,6 +34,7 @@
 			_styleText.width = _bgWidth;
 			_styleText.align = "center";
 			_styleText.autoSize = "center";
+			_styleText.color = BcastrConfig.titleTextColor;
 			y = -_bgHeight;
 			addChild(_bg);
 			addChild(_styleText);
