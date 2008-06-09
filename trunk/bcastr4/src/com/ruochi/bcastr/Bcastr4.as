@@ -74,7 +74,9 @@
 		}
 		private function startUp(xml:XML):void {
 			formatImageRss(xml);
-			xmlToVar(xml.config[0], BcastrConfig);
+			if(xml.config[0]){
+				xmlToVar(xml.config[0], BcastrConfig);
+			}
 			BcastrConfig.dataXml = xml;
 			setChildren();
 			addChildren();
