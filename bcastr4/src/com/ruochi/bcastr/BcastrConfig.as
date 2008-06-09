@@ -9,7 +9,7 @@
 		public static var autoPlayTime:Number = 8;
 		public static var isHeightQuality:Boolean =false;
 		public static var blendMode:String ="normal";
-		public static var transDuration:Number = 2;
+		public static var transDuration:Number = 1;
 		public static var windowOpen = "_self";
 		public static var dataXml;
 		public static var xml = "bcastr.xml";
@@ -30,7 +30,7 @@
 		public static var changImageMode:String = CLICK;
 		public static var isShowBtn:Boolean = true;
 		public static var isShowTitle:Boolean = true;
-		public static var scaleMode:String = ScaleUtils.SHOW_ALL;
+		public static var scaleMode:String = ScaleUtils.NO_BORDER;
 		public static var transform:String = Trans.ALPHA;
 		public static var isShowAbout:Boolean = true;
 		public static function set btnSetMargin(s:String) {
