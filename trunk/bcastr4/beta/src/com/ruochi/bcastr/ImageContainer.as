@@ -102,8 +102,8 @@
 		private function timerHandler(e:Event) {			
 			goto((_focusId + 1) % numChildren);
 		}
-		private function onClick(e:MouseEvent) {trace(_dataXml.channel.item[_focusId].link[0])
-			//navigateToURL(new URLRequest(_dataXml.channel.item[getChildIndex(e.currentTarget as DisplayObject)].link[0]),_windowOpen);
+		private function onClick(e:MouseEvent) {
+			navigateToURL(new URLRequest(_dataXml.channel.item[_focusId].link[0]),_windowOpen);
 		}
 		public function run():void {			
 			_transTimer = new Timer(_autoPlayTime * 1000, 0);
