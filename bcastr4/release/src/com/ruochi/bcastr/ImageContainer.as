@@ -43,7 +43,8 @@
 		private function init():void {
 			_binaryLdr.dataFormat = URLLoaderDataFormat.BINARY;
 			_binaryLdr.addEventListener(Event.COMPLETE, onComplete,false,0,true);
-			_binaryLdr.addEventListener(IOErrorEvent.IO_ERROR, onComplete, false, 0, true);			
+			_binaryLdr.addEventListener(IOErrorEvent.IO_ERROR, onComplete, false, 0, true);	
+			addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}
 		private function loadImage():void {
 			_binaryLdr.load(new URLRequest(_dataXml.channel.item[_loadId].image[0]));
@@ -88,10 +89,6 @@
 			image.blendMode = _imageBlendMode;
 			addChild(image);
 			setChildIndex(image, 0);
-			if (_dataXml.channel.item[_loadId].link[0] != undefined) {
-				image.buttonMode = true;
-				image.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
-			}
 			if (_loadId==0) {
 				goto(0);
 				_transTimer.start();
@@ -105,8 +102,8 @@
 		private function timerHandler(e:Event) {			
 			goto((_focusId + 1) % numChildren);
 		}
-		private function onClick(e:MouseEvent) {
-			navigateToURL(new URLRequest(_dataXml.channel.item[getChildIndex(e.currentTarget as DisplayObject)].link[0]),_windowOpen);
+		private function onClick(e:MouseEvent) {trace(_dataXml.channel.item[_focusId].link[0])
+			//navigateToURL(new URLRequest(_dataXml.channel.item[getChildIndex(e.currentTarget as DisplayObject)].link[0]),_windowOpen);
 		}
 		public function run():void {			
 			_transTimer = new Timer(_autoPlayTime * 1000, 0);
@@ -121,10 +118,16 @@
 				_focusId = id;
 				var focusImage:Sprite = getChildByName(String(_focusId)) as Sprite;
 				setChildIndex(focusImage, numChildren-1);
-				//setChildIndex(getChildByName(String(id)),0);
 				imageIn(focusImage);			
 				_transTimer.reset();
-				_transTimer.start();
+				_transTimer.start();				
+				if (_dataXml.channel.item[_focusId].link[0] != undefined) {
+					buttonMode = true;
+					mouseEnabled = true;
+					//image.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
+				}else {
+					buttonMode = false;
+					mouseEnabled = false;				}
 				dispatchEvent(new Eventer(Eventer.CHANGE,_focusId));
 			}
 		}
