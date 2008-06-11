@@ -1,10 +1,10 @@
 ﻿package com.ruochi.shape{
-	import flash.display.Sprite;
+	import flash.display.Shape;
 	import flash.display.SpreadMethod;
 	import flash.display.GradientType;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-	public class GradientRadialTopLeftRect extends Sprite {
+	public class GradientRadialTopLeftRect extends Shape {
 		private var _w:Number;
 		private var _h:Number;
 		private var _color1:uint;
@@ -19,9 +19,9 @@
 			_color2 = c2;
 			_alpha1 = alpha1;
 			_alpha2 = alpha2;
-			buildUI()
+			draw();
 		}
-		private function buildUI():void {
+		private function draw():void {
 			this.graphics.clear()
 			var fillType:String = GradientType.RADIAL;
 			var colors:Array = [_color1, _color2];
@@ -36,11 +36,11 @@
 		}
 		public function set color1(col:uint):void {
 			_color1 = col;
-			buildUI();
+			draw();
 		}
 		public function set color2(col:uint):void {
 			_color2 = col;
-			buildUI();
+			draw();
 		}
 	}
 }
