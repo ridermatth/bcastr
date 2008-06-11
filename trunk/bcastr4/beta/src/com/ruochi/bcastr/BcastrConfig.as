@@ -35,6 +35,7 @@
 		public static var scaleMode:String = ScaleUtils.NO_BORDER;
 		public static var transform:String = Trans.ALPHA;
 		public static var isShowAbout:Boolean = true;
+		public static var titleFont:String = "微软雅黑";
 		public static function set btnSetMargin(s:String) {
 			btnMargin = new Margin(s);
 		}
