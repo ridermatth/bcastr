@@ -51,6 +51,7 @@
 		<scaleMode>noBorder</scaleMode>
 		<transform>blur</transform>
 		<isShowAbout>true</isShowAbout>
+		<titleFont>微软雅黑</titleFont>
 	</config>
 </data>
         

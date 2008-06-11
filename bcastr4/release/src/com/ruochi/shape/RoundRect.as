@@ -1,7 +1,7 @@
 ﻿package com.ruochi.shape{
-	import flash.display.Sprite;
+	import flash.display.Shape;
 	import flash.geom.Rectangle;
-	public class RoundRect extends Sprite {
+	public class RoundRect extends Shape {
 		private var _w:Number;
 		private var _h:Number;
 		private var _r:Number;
@@ -12,9 +12,9 @@
 			_h = h;
 			_r = r;
 			_color = c;
-			buildUI()
+			draw();
 		}
-		public function buildUI():void {
+		public function draw():void {
 			this.graphics.clear();
 			this.graphics.beginFill(_color);
             this.graphics.drawRoundRect(0, 0, _w, _h, _r * 2);
@@ -25,14 +25,14 @@
 		}
 		public function set color(c:uint):void {
 			_color = c;
-			buildUI();
+			draw();
 		}
 		public function get color():uint {
 			return _color;
 		}
 		public function set corner(r:uint):void {
 			_r = r;
-			buildUI();
+			draw();
 		}
 	}
 }
