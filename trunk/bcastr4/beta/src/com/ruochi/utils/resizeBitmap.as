@@ -3,20 +3,32 @@
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	public function resizeBitmap(_bmp:BitmapData,_w:int,_h:int):BitmapData {
-		var i,tempId:int;
+		var i:int;
+		var tempId:int;
 		var returnBitmapData:BitmapData = new BitmapData(_w, _h);
-		var tempAlpha, tempRed, tempGreen, tempBlue, tempA, tempR, tempG, tempB:uint;
-		var pixelByteArray = _bmp.getPixels(_bmp.rect);
-		var xGapArray = new Array();
-		var yGapArray = new Array();
-		var tempByteArray = new ByteArray();
-		var returnByteArray = new ByteArray();
-		var lineByteArray = new ByteArray();
-		var pixelNum = _bmp.width * _bmp.height;
-		var xGap, yGap, temp, ratio, divid:Number;
+		var tempAlpha:uint
+		var tempRed:uint
+		var tempGreen:uint
+		var tempBlue:uint
+		var tempA:uint
+		var tempR:uint
+		var tempG:uint
+		var tempB:uint;
+		var pixelByteArray:ByteArray = _bmp.getPixels(_bmp.rect);
+		var xGapArray:Array = new Array();
+		var yGapArray:Array = new Array();
+		var tempByteArray:ByteArray = new ByteArray();
+		var returnByteArray:ByteArray = new ByteArray();
+		var lineByteArray:ByteArray = new ByteArray();
+		var pixelNum:int = _bmp.width * _bmp.height;
+		var xGap:Number;
+		var yGap:Number;
+		var temp:Number; 
+		var ratio:Number;
+		var divid:Number;
 		xGap=_bmp.width/_w;
 		yGap=_bmp.height/_h;
-		var area = xGap*yGap;
+		var area:Number = xGap*yGap;
 		for (i = 1; i<=_w; i++) {
 			xGapArray.push(xGap*i);
 		}
@@ -29,8 +41,8 @@
 		tempRed=0;
 		tempGreen=0;
 		tempBlue=0;
-		var tempi=0;
-		var tracei=0;
+		var tempi:int=0;
+		var tracei:int =0;
 		pixelByteArray.position=0;
 		for (i=0; i<pixelNum; i++) {
 			if (tempi+1==Math.floor(xGapArray[tempId])) {
@@ -70,7 +82,7 @@
 		tempGreen=0;
 		tempBlue=0;
 		tempi=0;
-		var tempLine=0;
+		var tempLine:int=0;
 		pixelNum = _w*_bmp.height;
 		lineByteArray.length=_w*1024*8;
 		returnByteArray.position=0;

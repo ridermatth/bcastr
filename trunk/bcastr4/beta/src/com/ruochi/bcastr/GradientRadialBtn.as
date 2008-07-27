@@ -48,11 +48,11 @@
 				color = BcastrConfig.btnDefaultColor;
 			}
 		}
-		public function set color(col:Number) {
+		public function set color(col:Number):void {
 			_color = col;
 			TweenLite.to(_body, .5, { tint:_color } );
 		}
-		public function set isFocus(boo:Boolean) {
+		public function set isFocus(boo:Boolean):void {
 			_isFocus = boo;
 			if (_isFocus) {
 				color = BcastrConfig.btnFocusColor;

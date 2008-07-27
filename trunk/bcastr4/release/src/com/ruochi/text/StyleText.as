@@ -4,7 +4,7 @@
 	import flash.text.AntiAliasType;
 	import flash.text.TextFieldAutoSize;
 	public class StyleText extends TextField {
-		private var _tf:TextFormat = new TextFormat();
+		private var _textFormat:TextFormat = new TextFormat();
 		private var _color:uint = 0xffffff;
 		private var _font:String = "微软雅黑";
 		private var _size:Number = 12;
@@ -14,39 +14,45 @@
 			selectable = false;
 			height = 1;
 			wordWrap = false;
-			autoSize = TextFieldAutoSize.LEFT			
-			antiAliasType = AntiAliasType.ADVANCED
-			init();
+			autoSize = TextFieldAutoSize.LEFT;	
+			antiAliasType = AntiAliasType.ADVANCED;
+			draw();
 		}
-		public function init() {
-			_tf.font = _font;
-			_tf.color = _color;
-			_tf.size = _size;
-			_tf.align = _align;
-			defaultTextFormat = _tf;
-			setTextFormat(_tf);			
+		private function draw():void {
+			_textFormat.font = _font;
+			_textFormat.color = _color;
+			_textFormat.size = _size;
+			_textFormat.align = _align;			
+			defaultTextFormat = _textFormat;
+			setTextFormat(_textFormat);			
 		}
-		public function set color(_c:uint) {
+		public function set color(_c:uint):void {
 			_color = _c;
-			init();
+			draw();
 		}
-		public function get color() {
-			return _color;
-		}
-		public function set align(_str:String) {
+		public function set align(_str:String):void {
+			autoSize = _str;
 			_align = _str;
-			init();
+			draw();
 		}
-		public function set size(_n:Number) {
+		public function set size(_n:Number):void{
 			_size = _n;
-			init();
+			draw();
 		}
-		public function set font(_str:String) {
+		public function set font(_str:String):void {
 			_font = _str;
-			init();
+			draw();
 		}
-		public function get tf():TextFormat {
-			return _tf;
+		public function set textFormat(tf:TextFormat):void {
+			_textFormat = tf;
+			draw()
+		}
+		public function get textFormat():TextFormat {
+			return _textFormat;
+		}
+		public function set bold(b:Boolean):void {
+			_textFormat.bold = b;
+			draw();
 		}
 	}
 }

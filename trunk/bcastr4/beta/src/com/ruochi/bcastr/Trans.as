@@ -45,7 +45,7 @@
 		public static function imageBlurOut(sprite:Sprite):void {
 			TweenLite.to(sprite.getChildAt(1), BcastrConfig.transDuration, { autoAlpha:0, ease:_easeClass} );
 		}
-		public static function imageSlideLeftIn(sprite:Sprite) {			
+		public static function imageSlideLeftIn(sprite:Sprite):void {			
 			slideInit(sprite);
 			if(sprite.parent.numChildren>1){
 				var prveSprite:Sprite = sprite.parent.getChildAt(sprite.parent.numChildren - 2) as Sprite;
@@ -55,10 +55,10 @@
 			}
 			TweenLite.to(sprite, BcastrConfig.transDuration, { x:0} );
 		}
-		public static function imageSlideLeftOut(sprite:Sprite) {
+		public static function imageSlideLeftOut(sprite:Sprite):void {
 			TweenLite.to(sprite, BcastrConfig.transDuration, { x:BcastrConfig.imageWidth} );
 		}
-		public static function imageSlideRightIn(sprite:Sprite) {			
+		public static function imageSlideRightIn(sprite:Sprite):void {			
 			slideInit(sprite);
 			if(sprite.parent.numChildren>1){
 				var prveSprite:Sprite = sprite.parent.getChildAt(sprite.parent.numChildren - 2) as Sprite;
@@ -68,10 +68,10 @@
 			}
 			TweenLite.to(sprite, BcastrConfig.transDuration, { x:0} );
 		}
-		public static function imageSlideRightOut(sprite:Sprite) {
+		public static function imageSlideRightOut(sprite:Sprite):void {
 			TweenLite.to(sprite, BcastrConfig.transDuration, { x:-BcastrConfig.imageWidth} );
 		}
-		public static function imageSlideBottomIn(sprite:Sprite) {			
+		public static function imageSlideBottomIn(sprite:Sprite):void {			
 			slideInit(sprite);
 			if(sprite.parent.numChildren>1){
 				var prveSprite:Sprite = sprite.parent.getChildAt(sprite.parent.numChildren - 2) as Sprite;
@@ -81,11 +81,11 @@
 			}
 			TweenLite.to(sprite, BcastrConfig.transDuration, { y:0} );
 		}
-		public static function imageSlideBottomOut(sprite:Sprite) {
+		public static function imageSlideBottomOut(sprite:Sprite):void {
 			TweenLite.to(sprite, BcastrConfig.transDuration, { y:-BcastrConfig.imageHeight} );
 		}
 		
-		public static function imageSlideTopIn(sprite:Sprite) {			
+		public static function imageSlideTopIn(sprite:Sprite):void {			
 			slideInit(sprite);
 			if(sprite.parent.numChildren>1){
 				var prveSprite:Sprite = sprite.parent.getChildAt(sprite.parent.numChildren - 2) as Sprite;
@@ -95,7 +95,7 @@
 			}
 			TweenLite.to(sprite, BcastrConfig.transDuration, { y:0} );
 		}
-		public static function imageSlideTopOut(sprite:Sprite) {
+		public static function imageSlideTopOut(sprite:Sprite):void {
 			TweenLite.to(sprite, BcastrConfig.transDuration, { y:BcastrConfig.imageHeight} );
 		}
 		private static function slideInit(sprite:Sprite):void {
@@ -104,8 +104,8 @@
 		}
 		
 		private static function breatheInit(sprite:Sprite):void {
-			var originalWidth = sprite.width;
-			var originalHeight = sprite.height;
+			var originalWidth:int = sprite.width;
+			var originalHeight:int = sprite.height;
 			sprite.scaleX = 1.2;
 			sprite.scaleY = 1.2;
 			sprite.x = -(sprite.width - originalWidth) / 2;

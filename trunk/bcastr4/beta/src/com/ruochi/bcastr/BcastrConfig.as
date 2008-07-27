@@ -10,9 +10,9 @@
 		public static var isHeightQuality:Boolean =false;
 		public static var blendMode:String ="normal";
 		public static var transDuration:Number = 1;
-		public static var windowOpen = "_self";
-		public static var dataXml;
-		public static var xml = "bcastr.xml";
+		public static var windowOpen:String = "_self";
+		public static var dataXml:XML;
+		public static var xml:String = "bcastr.xml";
 		public static var btnMargin:Margin = new Margin(Margin.AUTO, 5, 5, Margin.AUTO);
 		public static var imageWidth:Number;
 		public static var imageHeight:Number;
@@ -36,7 +36,7 @@
 		public static var transform:String = Trans.ALPHA;
 		public static var isShowAbout:Boolean = true;
 		public static var titleFont:String = "微软雅黑";
-		public static function set btnSetMargin(s:String) {
+		public static function set btnSetMargin(s:String):void {
 			btnMargin = new Margin(s);
 		}
 	}	

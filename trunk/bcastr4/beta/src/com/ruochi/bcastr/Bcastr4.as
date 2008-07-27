@@ -24,12 +24,15 @@
 	import com.ruochi.utils.xmlToVar;
 	import com.ruochi.bcastr.Trans;
 	import com.ruochi.utils.about;
+	import flash.text.Font;
 	public class Bcastr4 extends Sprite {
 		private var _imageContainer:ImageContainer = new ImageContainer();
 		private var _title:Title = new Title;
 		private var _btnSet:BtnSet = new BtnSet;
 		private var _imageMask:RoundRect;
 		private static var _instance:Bcastr4;
+		[Embed(source = "../../../font/SG16.TTF", fontName = "SG16", mimeType = "application/x-font", unicodeRange = "U+0030-U+003A")]
+		private var myFont:Class;
 		public function Bcastr4() {
 			_instance = this;
 			init();
@@ -39,9 +42,12 @@
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			Security.allowDomain('*');					
 			stage.addChild(SimpleAlert.instance);
+			if (myFont) {
+				Font.registerFont(myFont);
+			}
 			if (loaderInfo.parameters["xml"]) {
-				var xmlStr = replaceHat(String(loaderInfo.parameters["xml"]));
-				var dataXml = new XML(xmlStr);				
+				var xmlStr:String = replaceHat(String(loaderInfo.parameters["xml"]));
+				var dataXml:XML = new XML(xmlStr);				
 				if (dataXml.channel.item.length() > 0) {
 					startUp(dataXml);
 				}else {
@@ -69,7 +75,7 @@
 		private function configListener():void {
 			_imageContainer.addEventListener(Eventer.CHANGE,onImageContainerChanged,false,0,true)
 		}
-		private function onXmlLoaderComplete(event:Event) {
+		private function onXmlLoaderComplete(event:Event):void {
 			startUp(new XML(event.target.data));
 		}
 		private function startUp(xml:XML):void {
@@ -127,7 +133,7 @@
 				about(this, "About Bcastr 4.0", "http://code.google.com/p/bcastr/");
 			}
 		}
-		private function onImageContainerChanged(e:Eventer) {
+		private function onImageContainerChanged(e:Eventer):void {
 			dispatchEvent(new Eventer(Eventer.CHANGE,_imageContainer.focusId));
 		}
 		public function goto(num:int):void {

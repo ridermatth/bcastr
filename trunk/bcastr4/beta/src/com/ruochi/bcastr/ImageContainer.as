@@ -51,7 +51,7 @@
 			dispatchEvent(new Eventer(Eventer.START));
 		}
 		private function onComplete(e:Event):void {
-			var imageLdr = new Loader();
+			var imageLdr:Loader = new Loader();
 			imageLdr.contentLoaderInfo.addEventListener(Event.INIT, imageInit,false,0,true);
 			var imageData:ByteArray = e.target.data as ByteArray;
 			imageLdr.loadBytes(imageData);
@@ -99,10 +99,10 @@
 				loadImage();
 			}
 		}
-		private function timerHandler(e:Event) {			
+		private function timerHandler(e:Event):void {			
 			goto((_focusId + 1) % numChildren);
 		}
-		private function onClick(e:MouseEvent) {
+		private function onClick(e:MouseEvent):void {
 			navigateToURL(new URLRequest(_dataXml.channel.item[_focusId].link[0]),_windowOpen);
 		}
 		public function run():void {			
@@ -110,7 +110,7 @@
 			_transTimer.addEventListener(TimerEvent.TIMER, timerHandler);
 			loadImage();
 		}
-		public function goto(id) {
+		public function goto(id:int):void {
 			if (id!=_focusId && id < numChildren) {
 				if(focusId>-1){
 					imageOut(getChildAt(numChildren-1));
