@@ -14,8 +14,8 @@
 			displayObject.height = containerHeight;
 		}
 		public static function fillShowAll(displayObject:DisplayObject, containerWidth:Number, containerHeight:Number):void { 
-			var originW = displayObject.width / displayObject.scaleX;
-			var originH = displayObject.height / displayObject.scaleY;
+			var originW:Number = displayObject.width / displayObject.scaleX;
+			var originH:Number = displayObject.height / displayObject.scaleY;
 			if (originW/originH>containerWidth/containerHeight) { 
 				displayObject.width = containerWidth;	
 				displayObject.height = Math.round(displayObject.width / originW * originH);
@@ -27,8 +27,8 @@
 			displayObject.y = Math.round((containerHeight -displayObject.height) / 2);
 		}
 		public static function fillNoBorder(displayObject:DisplayObject, containerWidth:Number, containerHeight:Number):void {
-			var originW = displayObject.width / displayObject.scaleX;
-			var originH = displayObject.height / displayObject.scaleY;
+			var originW:Number = displayObject.width / displayObject.scaleX;
+			var originH:Number = displayObject.height / displayObject.scaleY;
 			if (originW/originH>containerWidth/containerHeight) {
 				displayObject.height=containerHeight;
 				displayObject.width=displayObject.height/originH*originW;
