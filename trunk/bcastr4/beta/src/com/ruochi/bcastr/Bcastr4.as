@@ -47,14 +47,14 @@
 			}
 			if (loaderInfo.parameters["xml"]) {
 				var xmlStr:String = replaceHat(String(loaderInfo.parameters["xml"]));
-				var dataXml:XML = new XML(xmlStr);				
+				var dataXml:XML = new XML(xmlStr);		
 				if (dataXml.channel.item.length() > 0) {
 					startUp(dataXml);
 				}else {
 					BcastrConfig.xml = xmlStr;
 				}
 			}
-			if (BcastrConfig.dataXml==null) {
+			if (BcastrConfig.dataXml==null) {BcastrConfig.xml = "http://feeds.feedburner.com/time/potw"
 				var xmlLoader:URLLoader = new URLLoader();
 				xmlLoader.addEventListener(Event.COMPLETE, onXmlLoaderComplete, false, 0, true);
 				xmlLoader.load(new URLRequest(BcastrConfig.xml));
