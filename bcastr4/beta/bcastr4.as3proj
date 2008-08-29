@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="example\bcastr4.swf" />
     <movie fps="30" />
-    <movie width="175" />
-    <movie height="105" />
+    <movie width="180" />
+    <movie height="180" />
     <movie version="9" />
     <movie background="#FFFFFF" />
   </output>

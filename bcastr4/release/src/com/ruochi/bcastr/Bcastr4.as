@@ -32,6 +32,15 @@
 		private static var _instance:Bcastr4;
 		public function Bcastr4() {
 			_instance = this;
+			if (stage) {
+				init();
+			}else {
+				addEventListener(Event.ADDED_TO_STAGE, onAddToStage, false, 0, true);
+			}			
+		}
+		
+		private function onAddToStage(e:Event):void {
+			removeEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			init();
 		}
 		private function init():void {

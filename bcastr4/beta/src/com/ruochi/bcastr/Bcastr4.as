@@ -54,7 +54,7 @@
 					BcastrConfig.xml = xmlStr;
 				}
 			}
-			if (BcastrConfig.dataXml==null) {BcastrConfig.xml = "http://feeds.feedburner.com/time/potw"
+			if (BcastrConfig.dataXml==null) {BcastrConfig.xml = "http://www.yupoo.com/services/feeds/photos?explore=1"
 				var xmlLoader:URLLoader = new URLLoader();
 				xmlLoader.addEventListener(Event.COMPLETE, onXmlLoaderComplete, false, 0, true);
 				xmlLoader.load(new URLRequest(BcastrConfig.xml));
