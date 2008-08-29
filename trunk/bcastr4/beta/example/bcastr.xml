@@ -45,7 +45,7 @@
 		<btnDefaultColor>0x1B3433</btnDefaultColor>
 		<btnHoverColor>0xff9900</btnHoverColor>
 		<btnFocusColor>0xff6600</btnFocusColor>
-		<changImageMode>click</changImageMode>
+		<changImageMode>hover</changImageMode>
 		<isShowBtn>true</isShowBtn>
 		<isShowTitle>true</isShowTitle>
 		<scaleMode>noBorder</scaleMode>
