@@ -33,11 +33,21 @@
 		private static var _instance:Bcastr4;
 		[Embed(source = "../../../font/SG16.TTF", fontName = "SG16", mimeType = "application/x-font", unicodeRange = "U+0030-U+003A")]
 		private var myFont:Class;
-		public function Bcastr4() {
+		public function Bcastr4() {			
 			_instance = this;
+			if (stage) {
+				init();
+			}else {
+				addEventListener(Event.ADDED_TO_STAGE, onAddToStage, false, 0, true);
+			}
+		}
+		
+		private function onAddToStage(e:Event):void {
 			init();
 		}
+		
 		private function init():void {
+			Controller.init(stage);
 			stage.align=StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			Security.allowDomain('*');					
