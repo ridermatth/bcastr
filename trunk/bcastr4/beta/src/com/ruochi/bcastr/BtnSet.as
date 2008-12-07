@@ -5,17 +5,20 @@
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import com.ruochi.bcastr.GradientRadialBtn;
-	import com.ruochi.bcastr.Bcastr4;
 	import com.ruochi.events.Eventer;
 	public class BtnSet extends Sprite {
 		private var _length:int;
 		private var _focusId:int = 0;
-		private var _bcastr4:Bcastr4;
 		private var _mask:Rect = new Rect(100, 100);
 		private var _wrapper:Sprite = new Sprite;
 		private var _autoScroll:AutoScroll;
+		static private var _instance:BtnSet = new BtnSet();
 		public function BtnSet() {
-			
+			if (!_instance) {
+				
+			}else {
+				throw new Error("singleton");
+			}
 		}
 		public function init():void {
 			setChildren();
@@ -28,13 +31,7 @@
 			addChild(_wrapper);
 		}
 		
-		private function addListeners():void{			
-			_bcastr4.addEventListener(Eventer.CHANGE, onBcastr4Change, false, 0, true);
-		}
-		
-		private function setChildren():void{			
-			_bcastr4 = Bcastr4.instance;
-			_length = _bcastr4.numImage;			
+		private function setChildren():void{	
 			buildUI();
 			_mask.width = (Math.min(_length, Math.floor(_bcastr4.stage.stageWidth/BcastrConfig.btnDistance) -1) - 1) * BcastrConfig.btnDistance + BcastrConfig.btnWidth;
 			_mask.height = BcastrConfig.btnHeight;
@@ -45,12 +42,12 @@
 		private function onBcastr4Change(e:Eventer):void {
 			focusId = int(e.eventInfo);
 		}
-		private function onBtnClick(e:MouseEvent):void {			
+		/*private function onBtnClick(e:MouseEvent):void {			
 			_bcastr4.goto(_wrapper.getChildIndex(e.currentTarget as DisplayObject));
 		}
 		private function onBtnMouseOver(e:MouseEvent):void {
 			_bcastr4.goto(_wrapper.getChildIndex(e.currentTarget as DisplayObject));
-		}
+		}*/
 		private function buildUI():void {
 			for (var i:int = 0; i < _length; i++) {
 				var btn:GradientRadialBtn = new GradientRadialBtn();
@@ -78,5 +75,7 @@
 			_focusId = num;
 			(_wrapper.getChildAt(_focusId) as GradientRadialBtn).isFocus = true;
 		}
+		
+		static public function get instance():BtnSet { return _instance; }
 	}
 }

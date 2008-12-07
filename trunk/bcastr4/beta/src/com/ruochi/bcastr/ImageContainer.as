@@ -2,7 +2,7 @@
 	import com.ruochi.shape.RoundRect;
 	import com.ruochi.events.Eventer;
 	import com.ruochi.utils.resizeBitmap;
-	import fl.motion.easing.*;
+	import com.robertpenner.easing.*
 	import com.ruochi.events.Eventer;
 	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
@@ -27,7 +27,6 @@
 		private var _imageWidth:Number =100;
 		private var _imageHeight:Number =100;
 		private var _autoPlayTime:Number = 8;
-		//private var _binaryLdr:URLLoader = new URLLoader();
 		private var _loader:Loader;
 		private var _transTimer:Timer;
 		private var _heightQuality:Boolean;
@@ -42,9 +41,6 @@
 			init();
 		}
 		private function init():void {
-			/*_binaryLdr.dataFormat = URLLoaderDataFormat.BINARY;
-			_binaryLdr.addEventListener(Event.COMPLETE, onComplete,false,0,true);
-			_binaryLdr.addEventListener(IOErrorEvent.IO_ERROR, onComplete, false, 0, true);	*/
 			addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}
 		
@@ -104,55 +100,6 @@
 			_loader.load(new URLRequest(_dataXml.channel.item[_loadId].image[0]));
 			dispatchEvent(new Eventer(Eventer.START));
 		}
-		/*private function onComplete(e:Event):void {
-			var imageLdr:Loader = new Loader();
-			imageLdr.contentLoaderInfo.addEventListener(Event.INIT, imageInit,false,0,true);
-			var imageData:ByteArray = e.target.data as ByteArray;
-			imageLdr.loadBytes(imageData);
-		}*/
-		/*private function imageInit(e:Event):void {
-			var image:Sprite = new Sprite();
-			image.scrollRect = new Rectangle(0, 0, _imageWidth, _imageHeight);
-			image.name = String(_loadId);
-			var bitmap:Bitmap = e.target.loader.content as Bitmap;
-			bitmap.smoothing = true;
-			if (_scaleMode == ScaleUtils.NO_SCALE) {
-				ScaleUtils.fillNoScale(bitmap, _imageWidth, _imageHeight);
-			}else if(_scaleMode == ScaleUtils.EXACT_FIT) {
-				ScaleUtils.fillExactFit(bitmap, _imageWidth, _imageHeight);
-				if (bitmap.scaleX<.5&&_heightQuality==true) {
-					bitmap.bitmapData = resizeBitmap(bitmap.bitmapData, bitmap.width, bitmap.height);
-					ScaleUtils.fillExactFit(bitmap, _imageWidth, _imageHeight);
-				}
-			}else if (_scaleMode == ScaleUtils.NO_BORDER) {				
-				ScaleUtils.fillNoBorder(bitmap, _imageWidth, _imageHeight);
-				if (bitmap.scaleX<.5&&_heightQuality==true) {
-					bitmap.bitmapData = resizeBitmap(bitmap.bitmapData, bitmap.width, bitmap.height);
-					ScaleUtils.fillNoBorder(bitmap, _imageWidth, _imageHeight);
-				}
-			}else if (_scaleMode == ScaleUtils.SHOW_ALL) {
-				ScaleUtils.fillShowAll(bitmap, _imageWidth, _imageHeight);
-				if (bitmap.scaleX<.5&&_heightQuality==true) {
-					bitmap.bitmapData = resizeBitmap(bitmap.bitmapData, bitmap.width, bitmap.height);
-					ScaleUtils.fillShowAll(bitmap, _imageWidth, _imageHeight);
-				}
-			}
-			image.addChild(bitmap);
-			bitmap.visible = false;
-			bitmap.alpha = 0;
-			image.blendMode = _imageBlendMode;
-			addChild(image);
-			setChildIndex(image, 0);
-			if (_loadId==0) {
-				goto(0);
-				_transTimer.start();
-			}
-			_loadId++;
-			dispatchEvent(new Eventer(Eventer.COMPLETE));
-			if (_loadId< _dataXml.channel.item.length()) {
-				loadImage();
-			}
-		}*/
 		private function timerHandler(e:Event):void {			
 			goto((_focusId + 1) % numChildren);
 		}

@@ -5,7 +5,6 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import gs.TweenLite;
-	import com.ruochi.bcastr.Bcastr4;
 	import com.ruochi.bcastr.BcastrConfig;
 	public class Title extends Sprite {
 		private var _styleText:StyleText = new StyleText();
@@ -13,16 +12,19 @@
 		private var _bgWidth:Number;
 		private var _bg:Rect;
 		private var _text:String;
-		private var _bcastr4:Bcastr4;
+		static private var _instance:Title = new Title();
 		public function Title() {
+			if (!_instance) {
+				
+			}else {
+				throw new Error("singleton");
+			}
 			
 		}
 		public function init(w:Number, h:Number = 24):void {
-			_bcastr4 = Bcastr4.instance;
 			_bgHeight = h;
 			_bgWidth = w;
 			buildUI();
-			_bcastr4.addEventListener(Eventer.CHANGE, onBcastr4Change, false, 0, true);
 		}
 		
 		private function onBcastr4Change(e:Eventer):void {
@@ -50,5 +52,7 @@
 			_text = str;
 			TweenLite.to(this, BcastrConfig.titleMoveDuration / 2, { y: -height, onComplete:showTitle } );
 		}
+				
+		static public function get instance():Title { return _instance; }
 	}
 }

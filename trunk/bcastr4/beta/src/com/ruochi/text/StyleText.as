@@ -4,9 +4,11 @@
 	import flash.text.AntiAliasType;
 	import flash.text.TextFieldAutoSize;
 	public class StyleText extends TextField {
+		private static var _defaultFont:String = "微软雅黑";
+		private static var _isEmbedFont:Boolean = false;
 		private var _textFormat:TextFormat = new TextFormat();
 		private var _color:uint = 0xffffff;
-		private var _font:String = "微软雅黑";
+		private var _font:String = _defaultFont;
 		private var _size:Number = 12;
 		private var _align:String = "left";
 		public function StyleText() {
@@ -14,8 +16,13 @@
 			selectable = false;
 			height = 1;
 			wordWrap = false;
-			autoSize = TextFieldAutoSize.LEFT;	
-			antiAliasType = AntiAliasType.ADVANCED;
+			autoSize = TextFieldAutoSize.LEFT;
+			embedFonts = _isEmbedFont;
+			if (embedFonts) {
+				antiAliasType = AntiAliasType.ADVANCED;
+				sharpness = 300;
+				thickness = -10;
+			}
 			draw();
 		}
 		private function draw():void {
@@ -29,6 +36,9 @@
 		public function set color(_c:uint):void {
 			_color = _c;
 			draw();
+		}
+		public function get color():uint {
+			return _color;
 		}
 		public function set align(_str:String):void {
 			autoSize = _str;
