@@ -6,7 +6,7 @@
 	import gs.TweenLite;
 	import com.ruochi.bcastr.BcastrConfig;
 	import flash.display.Sprite;
-	import fl.motion.easing.*;
+	import com.robertpenner.easing.*;
 	public class Trans {
 		public static const ALPHA:String = "alpha";
 		public static const BLUR:String = "blur";
@@ -114,7 +114,7 @@
 		
 		public static function imageBreatheIn(sprite:Sprite):void {
 			breatheInit(sprite);
-			TweenLite.to(sprite, BcastrConfig.transDuration, { x:0, y:0, scaleX:1, scaleY:1, ease:Exponential.easeOut} );
+			TweenLite.to(sprite, BcastrConfig.transDuration, { x:0, y:0, scaleX:1, scaleY:1, ease:Expo.easeOut} );
 			imageAlphaIn(sprite);			
 		}
 		public static function imageBreatheOut(sprite:Sprite):void {
@@ -123,7 +123,7 @@
 		
 		public static function imageBreatheBlurIn(sprite:Sprite):void {
 			breatheInit(sprite);
-			TweenLite.to(sprite, BcastrConfig.transDuration, { x:0, y:0, scaleX:1, scaleY:1, ease:Exponential.easeOut} );
+			TweenLite.to(sprite, BcastrConfig.transDuration, { x:0, y:0, scaleX:1, scaleY:1, ease:Expo.easeOut} );
 			imageBlurIn(sprite)		
 		}
 		public static function imageBreatheBlurOut(sprite:Sprite):void {
