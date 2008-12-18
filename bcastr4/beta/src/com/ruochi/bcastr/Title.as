@@ -8,9 +8,9 @@
 	import com.ruochi.bcastr.BcastrConfig;
 	public class Title extends Sprite {
 		private var _styleText:StyleText = new StyleText();
-		private var _bgHeight:Number = 24;
-		private var _bgWidth:Number;
-		private var _bg:Rect;
+		private var _height:Number = 24;
+		private var _width:Number;
+		private var _bg:Rect = new Rect();
 		private var _text:String;
 		static private var _instance:Title = new Title();
 		public function Title() {
@@ -21,26 +21,40 @@
 			}
 			
 		}
-		public function init(w:Number, h:Number = 24):void {
-			_bgHeight = h;
-			_bgWidth = w;
-			buildUI();
+		public function init():void {
+			setChildren();
 		}
+		
+		override public function get width():Number { return _width; }
+		
+		override public function set width(value:Number):void {
+			_width = value;
+			_bg.width = _width;
+			_styleText.width = _width;
+		}
+		
+		override public function get height():Number { return _height; }
+		
+		override public function set height(value:Number):void {
+			_height = value;
+			_bg.height = value;
+		}
+		
 		
 		private function onBcastr4Change(e:Eventer):void {
 			titleText = BcastrConfig.dataXml.channel.item[e.eventInfo].title;
 		}
-		private function buildUI():void {
-			_bg = new Rect(_bgWidth, _bgHeight, BcastrConfig.titleBgColor);
-			_bg.alpha = BcastrConfig.titleBgAlpha;
-			_styleText.width = _bgWidth;
+		private function setChildren():void {
+			//_bg = new Rect(_width, _height, BcastrConfig.titleBgColor);
+			//_bg.alpha = BcastrConfig.titleBgAlpha;
 			_styleText.align = "center";
-			_styleText.autoSize = "center";
-			_styleText.color = BcastrConfig.titleTextColor;
-			_styleText.font = BcastrConfig.titleFont
-			y = -_bgHeight;
+			//_styleText.autoSize = "center";
+			//_styleText.color = BcastrConfig.titleTextColor;
+			//_styleText.font = BcastrConfig.titleFont
+			y = -_height;
 			addChild(_bg);
 			addChild(_styleText);
+			width = _width;
 		}
 		private function showTitle():void {
 			_styleText.text = _text;
@@ -54,5 +68,13 @@
 		}
 				
 		static public function get instance():Title { return _instance; }
+		
+		public function get styleText():StyleText { return _styleText; }
+		
+		public function get bg():Rect { return _bg; }
+		
+		public function set bg(value:Rect):void {
+			_bg = value;
+		}
 	}
 }

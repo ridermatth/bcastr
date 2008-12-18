@@ -7,7 +7,7 @@
   <compiler>
     <source-path append="true">
       <path-element>E:\svn\code\bcastr\trunk\bcastr4\beta\src</path-element>
-      <path-element>D:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>d:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>

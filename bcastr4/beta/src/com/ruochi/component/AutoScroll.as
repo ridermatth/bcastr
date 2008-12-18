@@ -45,8 +45,16 @@
 		private function onMaskMouseMove(e:MouseEvent):void {
 			if (_mask.hitTestPoint(_mask.stage.mouseX, _mask.stage.mouseY)) {
 				_isMouseOver = true;
-				if(!_isEnterFrame){
-					_mask.addEventListener(Event.ENTER_FRAME, onMaskEnterFrame);
+				if (!_isEnterFrame) {
+					if (_direction == HORIZON) {
+						if (_content.width > _mask.width) {
+							_mask.addEventListener(Event.ENTER_FRAME, onMaskEnterFrame);
+						}
+					}else{
+						if (_content.height > _mask.height) {
+							_mask.addEventListener(Event.ENTER_FRAME, onMaskEnterFrame);
+						}
+					}
 					_isEnterFrame = true
 				}
 			}else {
