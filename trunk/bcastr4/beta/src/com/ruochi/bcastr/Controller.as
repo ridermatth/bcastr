@@ -1,4 +1,5 @@
 ﻿package com.ruochi.bcastr {
+	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -19,6 +20,7 @@
 	public class Controller {
 		private static var _stage:Stage;
 		private static var _dataXml:XML;
+		private static var _length:int;
 		static public function init(stage:Stage):void {
 			_stage = stage;			
 			_stage.align=StageAlign.TOP_LEFT;
@@ -27,8 +29,9 @@
 			stage.addChild(SimpleAlert.instance);			
 			if (_stage.loaderInfo.parameters["xml"]) {
 				var xmlStr:String = replaceHat(String(_stage.loaderInfo.parameters["xml"]));
-				var dataXml:XML = new XML(xmlStr);		
-				if (dataXml.channel.item.length() > 0) {
+				var dataXml:XML = new XML(xmlStr);	
+				_length = dataXml.channel.item.length();
+				if (_length > 0) {
 					startUp(dataXml);
 				}else {
 					BcastrConfig.xml = xmlStr;
@@ -46,11 +49,23 @@
 			addListenre();
 		}
 		static private function addListenre():void {
-			Bcastr4.instance.imageContainer.addEventListener(Eventer.CHANGE,onImageContainerChanged,false,0,true)
+			Bcastr4.instance.imageContainer.addEventListener(Eventer.CHANGE, onImageContainerChanged, false, 0, true);
+			if(BcastrConfig.changImageMode == BcastrConfig.CLICK){
+				BtnSet.instance.addEventListener(MouseEvent.CLICK, onBtnSetChange, false, 0, true);
+			}else {
+				BtnSet.instance.addEventListener(MouseEvent.MOUSE_OVER, onBtnSetChange, false, 0, true);
+			}
+		}
+		
+		static private function onBtnSetChange(e:MouseEvent):void {
+			var displayObject:DisplayObject = e.target as DisplayObject;
+			var id:int = displayObject.parent.getChildIndex(displayObject);
+			Bcastr4.instance.imageContainer.goto(id);
 		}
 		static private function onImageContainerChanged(e:Eventer):void {
-			trace(e.eventInfo);
-			//dispatchEvent(new Eventer(Eventer.CHANGE,_imageContainer.focusId));
+			var id:int = Bcastr4.instance.imageContainer.focusId;
+			BtnSet.instance.focusId = id;
+			Title.instance.titleText = _dataXml.channel[0].item[id].title[0];
 		}
 		static private function startUp(xml:XML):void {
 			formatImageRss(xml);
@@ -58,11 +73,12 @@
 				xmlToVar(xml.config[0], BcastrConfig);
 			}
 			_dataXml = xml;
-			BtnSet.instance.init();
-			place(BtnSet.instance, BcastrConfig.btnMargin, _stage);
+			_length = dataXml.channel.item.length(); 
+			BcastrConfig.imageWidth = BcastrConfig.imageWidth ?BcastrConfig.imageWidth:_stage.stageWidth;
+			BcastrConfig.imageHeight = BcastrConfig.imageHeight ?BcastrConfig.imageHeight:_stage.stageHeight;
 			Bcastr4.instance.imageContainer.dataXml = _dataXml;
-			Bcastr4.instance.imageContainer.imageWidth = isNaN(BcastrConfig.imageWidth)?_stage.stageWidth:BcastrConfig.imageWidth;
-			Bcastr4.instance.imageContainer.imageHeight = isNaN(BcastrConfig.imageHeight)?_stage.stageHeight:BcastrConfig.imageHeight;
+			Bcastr4.instance.imageContainer.imageWidth = BcastrConfig.imageWidth;
+			Bcastr4.instance.imageContainer.imageHeight = BcastrConfig.imageHeight;
 			BcastrConfig.imageWidth = Bcastr4.instance.imageContainer.imageWidth;
 			BcastrConfig.imageHeight = Bcastr4.instance.imageContainer.imageHeight;
 			Bcastr4.instance.imageContainer.autoPlayTime = BcastrConfig.autoPlayTime;
@@ -70,7 +86,6 @@
 			Bcastr4.instance.imageContainer.transDuration = BcastrConfig.transDuration;
 			Bcastr4.instance.imageContainer.windowOpen = BcastrConfig.windowOpen;
 			Bcastr4.instance.imageContainer.imageBlendMode = BcastrConfig.blendMode;
-			Title.instance.init(Bcastr4.instance.imageContainer.imageWidth);
 			Bcastr4.instance.imageMask.width = Bcastr4.instance.imageContainer.imageWidth;
 			Bcastr4.instance.imageMask.height = Bcastr4.instance.imageContainer.imageHeight;
 			Bcastr4.instance.imageMask.corner = BcastrConfig.roundCorner;
@@ -104,6 +119,22 @@
 			if (BcastrConfig.isShowAbout) {
 				about(Bcastr4.instance, "About Bcastr 4.0", "http://code.google.com/p/bcastr/");
 			}
+			
+			
+			Title.instance.width = BcastrConfig.imageWidth;
+			
+			Title.instance.bg.color = BcastrConfig.titleBgColor;
+			Title.instance.bg.alpha = BcastrConfig.titleBgAlpha;
+			Title.instance.styleText.color = BcastrConfig.titleTextColor;
+			Title.instance.styleText.font = BcastrConfig.titleFont
+			Title.instance.init();
+			
+			BtnSet.instance.width = BcastrConfig.imageWidth;
+			BtnSet.instance.height = BcastrConfig.btnHeight;
+			BtnSet.instance.length = _length;
+			BtnSet.instance.btnGap = BcastrConfig.btnDistance;
+			BtnSet.instance.init();
+			place(BtnSet.instance, BcastrConfig.btnMargin, _stage);
 		}
 		
 		static public function get dataXml():XML { return _dataXml; }
