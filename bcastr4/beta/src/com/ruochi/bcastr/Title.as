@@ -18,8 +18,7 @@
 				
 			}else {
 				throw new Error("singleton");
-			}
-			
+			}			
 		}
 		public function init():void {
 			setChildren();
@@ -31,6 +30,7 @@
 			_width = value;
 			_bg.width = _width;
 			_styleText.width = _width;
+			_styleText.x = 0;
 		}
 		
 		override public function get height():Number { return _height; }
@@ -45,12 +45,9 @@
 			titleText = BcastrConfig.dataXml.channel.item[e.eventInfo].title;
 		}
 		private function setChildren():void {
-			//_bg = new Rect(_width, _height, BcastrConfig.titleBgColor);
-			//_bg.alpha = BcastrConfig.titleBgAlpha;
 			_styleText.align = "center";
-			//_styleText.autoSize = "center";
-			//_styleText.color = BcastrConfig.titleTextColor;
-			//_styleText.font = BcastrConfig.titleFont
+			_styleText.autoSize = "none";
+			_styleText.height = 20;
 			y = -_height;
 			addChild(_bg);
 			addChild(_styleText);

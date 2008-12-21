@@ -43,7 +43,7 @@
 		
 		override public function get width():Number { return _width; }
 		
-		override public function set width(value:Number):void { trace(value);
+		override public function set width(value:Number):void {
 			_width = value;
 			_wrapperMask.width = _width;
 			_wrapper.x = _width - _wrapper.width;
@@ -65,15 +65,10 @@
 			_bcastr4.goto(_wrapper.getChildIndex(e.currentTarget as DisplayObject));
 		}*/
 		private function buildUI():void {
-			for (var i:int = 0; i < _length; i++) { trace('b');
+			for (var i:int = 0; i < _length; i++) {
 				var btn:GradientRadialBtn = new GradientRadialBtn();
 				btn.x = _btnGap * i;
 				btn.text = String(i + 1);
-				/*if(BcastrConfig.changImageMode == BcastrConfig.CLICK){
-					btn.addEventListener(MouseEvent.CLICK, onBtnClick, false, 0, true);
-				}else {
-					btn.addEventListener(MouseEvent.MOUSE_OVER, onBtnMouseOver, false, 0, true);
-				}*/
 				_wrapper.addChild(btn);
 			}
 			width = _width;

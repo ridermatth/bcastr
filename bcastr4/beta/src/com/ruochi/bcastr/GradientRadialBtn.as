@@ -4,7 +4,7 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import com.ruochi.text.EmbedText;
-	import gs.TweenLite;
+	import com.ruochi.tween.Motion;
 	import com.ruochi.bcastr.BcastrConfig;
 	public class GradientRadialBtn extends Sprite {
 		private var _isFocus:Boolean = false;
@@ -50,7 +50,7 @@
 		}
 		public function set color(col:Number):void {
 			_color = col;
-			TweenLite.to(_body, .5, { tint:_color } );
+			Motion.to(_body, { color:_color } );
 		}
 		public function set isFocus(boo:Boolean):void {
 			_isFocus = boo;

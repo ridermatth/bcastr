@@ -37,7 +37,7 @@
 			addChildren();
 		}
 		private function setChildren():void {
-			
+			//_imageContainer.mask = _imageMask;
 		}
 		private function addChildren():void {
 			addChild(_imageContainer);
