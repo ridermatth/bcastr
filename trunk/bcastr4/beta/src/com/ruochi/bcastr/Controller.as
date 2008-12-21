@@ -49,12 +49,25 @@
 			addListenre();
 		}
 		static private function addListenre():void {
+			_stage.addEventListener(Event.RESIZE, stageResize);
 			Bcastr4.instance.imageContainer.addEventListener(Eventer.CHANGE, onImageContainerChanged, false, 0, true);
 			if(BcastrConfig.changImageMode == BcastrConfig.CLICK){
 				BtnSet.instance.addEventListener(MouseEvent.CLICK, onBtnSetChange, false, 0, true);
 			}else {
 				BtnSet.instance.addEventListener(MouseEvent.MOUSE_OVER, onBtnSetChange, false, 0, true);
 			}
+		}
+		
+		static private function stageResize(e:Event):void {
+			var width:int = _stage.stageWidth;
+			var height:int = _stage.stageHeight;
+			Bcastr4.instance.imageContainer.width = width;
+			Bcastr4.instance.imageContainer.height = height;
+			Title.instance.width = width;
+			BtnSet.instance.width = width;
+			place(BtnSet.instance, BcastrConfig.btnMargin, _stage);
+			Bcastr4.instance.imageMask.width = width;
+			Bcastr4.instance.imageMask.height = height; trace('bb');
 		}
 		
 		static private function onBtnSetChange(e:MouseEvent):void {
@@ -77,17 +90,17 @@
 			BcastrConfig.imageWidth = BcastrConfig.imageWidth ?BcastrConfig.imageWidth:_stage.stageWidth;
 			BcastrConfig.imageHeight = BcastrConfig.imageHeight ?BcastrConfig.imageHeight:_stage.stageHeight;
 			Bcastr4.instance.imageContainer.dataXml = _dataXml;
-			Bcastr4.instance.imageContainer.imageWidth = BcastrConfig.imageWidth;
-			Bcastr4.instance.imageContainer.imageHeight = BcastrConfig.imageHeight;
-			BcastrConfig.imageWidth = Bcastr4.instance.imageContainer.imageWidth;
-			BcastrConfig.imageHeight = Bcastr4.instance.imageContainer.imageHeight;
+			Bcastr4.instance.imageContainer.width = BcastrConfig.imageWidth;
+			Bcastr4.instance.imageContainer.height = BcastrConfig.imageHeight;
+			BcastrConfig.imageWidth = Bcastr4.instance.imageContainer.width;
+			BcastrConfig.imageHeight = Bcastr4.instance.imageContainer.height;
 			Bcastr4.instance.imageContainer.autoPlayTime = BcastrConfig.autoPlayTime;
 			Bcastr4.instance.imageContainer.heightQuality = BcastrConfig.isHeightQuality;
 			Bcastr4.instance.imageContainer.transDuration = BcastrConfig.transDuration;
 			Bcastr4.instance.imageContainer.windowOpen = BcastrConfig.windowOpen;
 			Bcastr4.instance.imageContainer.imageBlendMode = BcastrConfig.blendMode;
-			Bcastr4.instance.imageMask.width = Bcastr4.instance.imageContainer.imageWidth;
-			Bcastr4.instance.imageMask.height = Bcastr4.instance.imageContainer.imageHeight;
+			Bcastr4.instance.imageMask.width = Bcastr4.instance.imageContainer.width;
+			Bcastr4.instance.imageMask.height = Bcastr4.instance.imageContainer.height;
 			Bcastr4.instance.imageMask.corner = BcastrConfig.roundCorner;
 			if(BcastrConfig.transform == Trans.BLUR){
 				Bcastr4.instance.imageContainer.imageIn = Trans.imageBlurIn;
@@ -121,12 +134,14 @@
 			}
 			
 			
-			Title.instance.width = BcastrConfig.imageWidth;
+			
 			
 			Title.instance.bg.color = BcastrConfig.titleBgColor;
 			Title.instance.bg.alpha = BcastrConfig.titleBgAlpha;
 			Title.instance.styleText.color = BcastrConfig.titleTextColor;
-			Title.instance.styleText.font = BcastrConfig.titleFont
+			Title.instance.styleText.font = BcastrConfig.titleFont;
+			Title.instance.height = 24;
+			Title.instance.width = BcastrConfig.imageWidth;
 			Title.instance.init();
 			
 			BtnSet.instance.width = BcastrConfig.imageWidth;
