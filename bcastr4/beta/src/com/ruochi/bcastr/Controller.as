@@ -67,7 +67,7 @@
 			BtnSet.instance.width = width;
 			place(BtnSet.instance, BcastrConfig.btnMargin, _stage);
 			Bcastr4.instance.imageMask.width = width;
-			Bcastr4.instance.imageMask.height = height; trace('bb');
+			Bcastr4.instance.imageMask.height = height;
 		}
 		
 		static private function onBtnSetChange(e:MouseEvent):void {

@@ -13,7 +13,7 @@
 		public static var windowOpen:String = "_self";
 		public static var dataXml:XML;
 		public static var xml:String = "bcastr.xml";
-		public static var btnMargin:Margin = new Margin(Margin.AUTO, 5, 5, Margin.AUTO);
+		public static var btnMargin:Margin = new Margin("auto 5 5 auto");
 		public static var imageWidth:Number;
 		public static var imageHeight:Number;
 		public static var btnDistance:Number = 20;

@@ -1,70 +1,51 @@
 ﻿package com.ruochi.layout {
 	public class Margin {
-		public static const AUTO:String = "auto";
-		private var _top:Object;
-		private var _bottom:Object;
-		private var _left:Object;
-		private var _right:Object;
-		public function Margin(t:Object = null, r:Object = null, b:Object = null, l:Object = null) {
-			if (String(t).indexOf(" ") > 0) {
-				var array:Array = String(t).split(" ");
-				top = array[0];
-				right = array[1];
-				bottom = array[2];
-				left = array[3];
-			}else {
-				top = t;
-				right = r;
-				bottom = b;
-				left = l;
-			}
+		private var _top:Gap;
+		private var _bottom:Gap;
+		private var _left:Gap;
+		private var _right:Gap;
+		public function Margin(margin:* = "0 0 0 0") {
+				var array:Array = String(margin).split(" ");
+				if(array.length ==4){
+					top = new Gap(array[0]);
+					right = new Gap(array[1]);
+					bottom = new Gap(array[2]);
+					left = new Gap(array[3]);
+				}else if(array.length ==2){
+					top = new Gap(array[0]);
+					right = new Gap(array[1]);
+					bottom = new Gap(array[0]);
+					left = new Gap(array[1]);
+				}else if (array.length == 1) {
+					top = new Gap(array[0]);
+					right = new Gap(array[0]);
+					bottom = new Gap(array[0]);
+					left = new Gap(array[0]);
+				}
 		}
-		public function set top(t:Object):void {
-			_top = checkIsAuto(String(t)) ? AUTO : t; 
+		
+		public function get top():Gap { return _top; }
+		
+		public function set top(value:Gap):void {
+			_top = value;
 		}
-		public function get top():Object {
-			if (_top == AUTO) {
-				return AUTO;
-			}else {
-				return Number(_top);
-			}			
+		
+		public function get bottom():Gap { return _bottom; }
+		
+		public function set bottom(value:Gap):void {
+			_bottom = value;
 		}
-		public function set bottom(b:Object):void {
-			_bottom = checkIsAuto(String(b)) ? AUTO : b; 
+		
+		public function get left():Gap { return _left; }
+		
+		public function set left(value:Gap):void {
+			_left = value;
 		}
-		public function get bottom():Object {
-			if (_bottom == AUTO) {
-				return AUTO;
-			}else {
-				return Number(_bottom);
-			}	
-		}
-		public function set left(l:Object):void {
-			_left = checkIsAuto(String(l)) ? AUTO : l; 
-		}
-		public function get left():Object {
-			if (_left == AUTO) {
-				return AUTO;
-			}else {
-				return Number(_left);
-			}	
-		}
-		public function set right(r:Object):void {
-			_right = checkIsAuto(String(r)) ? AUTO : r; 
-		}
-		public function get right():Object {
-			if (_right == AUTO) {
-				return AUTO;
-			}else {
-				return Number(_right);
-			}	
-		}
-		private function checkIsAuto(str:String):Boolean {
-			if (str == null || str.toLowerCase() == AUTO) {
-				return true;
-			}else {
-				return false
-			}
+		
+		public function get right():Gap { return _right; }
+		
+		public function set right(value:Gap):void {
+			_right = value;
 		}
 	}	
 }

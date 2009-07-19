@@ -7,6 +7,7 @@
 		public static const CHANGE:String = "change";
 		public static const LAYOUT_CHANGE:String = "lauyouChange";
 		public static const ERROR:String = "error";
+		public static const FINISH:String = "finish";
 		private var _info:Object;
 		public function Eventer(type:String, info:Object=null, bubbles:Boolean = false, cancelable:Boolean = false) {
 			super(type, bubbles, cancelable);
