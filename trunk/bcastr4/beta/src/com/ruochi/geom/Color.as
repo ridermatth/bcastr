@@ -21,21 +21,47 @@
 		}
 		public function set red(r:uint):void {
 			_r = r;
-			_color = _r * 65536 + _g * 256 + _b; 
+			_color = sumRGB(_r, _g, _b);
 		}
 		public function set green(g:uint):void {
 			_g = g;
-			_color = _r * 65536 + _g * 256 + _b; 
+			_color = sumRGB(_r, _g, _b);
 		}
 		public function set blue(b:uint):void {
 			_b = b;
-			_color = _r * 65536 + _g * 256 + _b; 
+			_color = sumRGB(_r, _g, _b);
 		}
-		public function set color(c:uint):void{
-			_color = c;
-			_r = Math.floor(_color / 65536);
-			_g = Math.floor((_color % 65536) / 256);
-			_b = _color % 256;
+		
+		
+		
+		public function set color(value:uint):void{
+			_color = value;
+			_b = value & 0xff;
+			value = value >> 8;
+			_g = value & 0xff;
+			value = value >> 8;
+			_r = value & 0xff;
+		}
+		
+		static public function sumRGB(r:uint, g:uint, b:uint):uint {
+			return ((((r) << 8) | g) <<8) | b
+		}
+		
+		static public function sum(colorA:uint, colorB:uint):uint {
+			var color1:Color = new Color(colorA);
+			var color2:Color = new Color(colorB);
+			var r:uint = color1.red + color2.red;
+			var g:uint =  color1.green + color2.green;
+			var b:uint =  color1.blue + color2.blue; 
+			return sumRGB(r, g, b);
+		}
+		
+		static public function multiplication(value:uint, n:Number):uint {
+			var c:Color = new Color(value);
+			var r:uint = (c.red * n);
+			var g:uint = (c.green * n);
+			var b:uint = (c.blue * n);
+			return sumRGB(r, g, b);
 		}
 	}
 }

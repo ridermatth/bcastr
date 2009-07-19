@@ -6,6 +6,7 @@
 	import flash.utils.Dictionary;
 	import flash.events.Event;
 	import flash.utils.getTimer;
+	import com.ruochi.utils.getObjectNumChildren;
 	public class Motion extends EventDispatcher{
 		private static var _dictionary:Dictionary = new Dictionary(true);
 		private static var _isEnterFrame:Boolean;
@@ -17,8 +18,11 @@
 		private var _duration:Number;
 		private var _easeFunction:Function;
 		private var _keyValue:Object;
-		private var _propNum:int=0;
+		private var _propNum:int = 0;
+		private var _info:Object;
+		private var _isRunning:Boolean;
 		public function Motion(object:Object, keyValue:Object, duration:Number, easeFunction:Function) {
+			_isRunning = true;
 			_object = object;
 			_beginTime = getTimer();
 			_duration = duration*1000;
@@ -27,23 +31,14 @@
 			_easeFunction = easeFunction;
 			var tweenObject:TweenObject;
 			if (_dictionary[_object] == undefined) {
-				_dictionary[_object] = new Object;
+				_dictionary[_object] = new Dictionary(true);
 			}
 			for (var prop:String in _keyValue) {
 				_dictionary[_object][prop] = new TweenObject(_object, prop, _keyValue[prop], this);
 				_propNum++;
-				/*if (prop == "tint") {
-					var colorWithDisplayObject:ColorWithDisplayObject = new ColorWithDisplayObject(_object);
-					var color:Color = new Color(_keyValue[prop]);
-					Motion.to(colorWithDisplayObject, { red:color.red, green:color.green, blue:color.blue }, duration, easeFunction );
-					//_dictionary[_object][prop] = new TweenObject(_object, prop, _keyValue[prop], this);
-				}else {*/
-					//_dictionary[_object][prop] = new TweenObject(_object, prop, _keyValue[prop], this);
-					//_propNum++;
-				//}				
 			}
 		}		
-		public static function to(object:Object, keyValue:Object, duration:Number = 1, easeFunction:Function = null ):Motion {			
+		public static function to(object:Object, keyValue:Object, duration:Number = 0.5, easeFunction:Function = null ):Motion {			
 			if (easeFunction == null) {
 				easeFunction = easeOut;
 			}
@@ -64,6 +59,7 @@
 			_propNum--;
 			if (_propNum == 0) {
 				dispatchEvent(new Event(Event.COMPLETE));
+				_isRunning = false;
 			}
 		}
 		
@@ -100,18 +96,21 @@
 				if (propNum == 0) {
 					delete _dictionary[motionObject];
 				}
-				_objectNum++
+				_objectNum++; 
 			}
 			if (_objectNum == 0) {
 				_sprite.removeEventListener(Event.ENTER_FRAME, onStageEnterFrame);
-				_isEnterFrame = false;
+				_isEnterFrame = false; 
 			}
 		}
 		
 		public function stop():void {
 			for (var prop:String in _keyValue) {
-				delete _dictionary[_object][prop]
+				if(_dictionary[_object] && _dictionary[_object][prop]){
+					delete _dictionary[_object][prop]
+				}
 			}
+			_isRunning = false;
 		}
 		
 		public static function easeOut(t:Number, b:Number, c:Number, d:Number):Number {
@@ -127,6 +126,14 @@
 		public function get object():Object { return _object; }
 		
 		public function get duration():Number { return _duration; }
+		
+		public function get info():Object { return _info; }
+		
+		public function set info(value:Object):void {
+			_info = value;
+		}
+		
+		public function get isRunning():Boolean { return _isRunning; }
 		
 	}	
 }
